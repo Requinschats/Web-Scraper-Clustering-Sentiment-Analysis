@@ -1,5 +1,7 @@
 from sklearn.metrics import pairwise_distances
 
+from common.common import sort_by_second_tuple_element
+
 
 def select_ranked_terms_by_cluster(order_centroids, terms, true_k, term_per_cluster):
     ranked_terms_by_cluster = []
@@ -25,6 +27,8 @@ def select_centroids_doc_id_center_distance(corpus, labels, distance_to_cluster)
         if assigned_centroid in centroid_doc_id_center_distance:
             centroid_doc_id_center_distance[assigned_centroid].append(
                 (doc_id, distance_to_centroid))
+            centroid_doc_id_center_distance[assigned_centroid] = sort_by_second_tuple_element(
+                centroid_doc_id_center_distance[assigned_centroid])
         else:
             centroid_doc_id_center_distance[assigned_centroid] = [
                 (doc_id, distance_to_centroid)]

@@ -1,6 +1,4 @@
-import numpy as np
-from sklearn.metrics import pairwise_distances
-
+from cluster_Afinn.cluster_afinn import ClusterAfinn
 from html_crawler.html_crawler import HtmlCrawler
 from k_means.k_means import K_means
 from link_crawler.link_crawler import link_crawler
@@ -17,4 +15,8 @@ model = k_means.model
 
 cluster_titles = k_means.get_clusters_title()
 
-print(k_means.get_centroids_doc_id_center_distance())
+clusters = k_means.get_centroids_doc_id_center_distance()
+
+afin = ClusterAfinn(clusters, html_documents)
+
+print(maafin.get_formatted_corpus())

@@ -15,12 +15,12 @@ class K_means:
         self.vectorized_documents = None
         self.true_k = n_clusters
         self.corpus = html_documents
-        self.model = self.select_model(html_documents)
+        self.model = self.select_model()
 
-    def select_model(self, html_documents):
+    def select_model(self):
         print("Initializing K-Means model...")
         vectorizer = TfidfVectorizer(stop_words='english')
-        self.vectorized_documents = vectorizer.fit_transform(html_documents)
+        self.vectorized_documents = vectorizer.fit_transform(self.corpus)
         self.vectorizer = vectorizer
         k2_model = KMeans(n_clusters=self.true_k, init='k-means++', max_iter=100, n_init=1)
         k2_model.fit(self.vectorized_documents)
@@ -44,6 +44,4 @@ class K_means:
     def get_centroids_doc_id_center_distance(self):
         labels = self.model.labels_
         distance_to_cluster = select_distance_to_cluster(self)
-        centroid_doc_id_center_distance = select_centroids_doc_id_center_distance(self.corpus,
-                                                                                  labels,
-                                                                                  distance_to_cluster)
+        return select_centroids_doc_id_center_distance(self.corpus, labels, distance_to_cluster)
