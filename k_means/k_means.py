@@ -2,7 +2,9 @@ import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
 import pandas as pd
-from k_means.selectors import select_ranked_terms_by_cluster
+from k_means.selectors import select_ranked_terms_by_cluster, select_distance_to_cluster, \
+    select_centroids_doc_id_center_distance
+from sklearn.metrics import pairwise_distances
 
 
 class K_means:
@@ -12,6 +14,7 @@ class K_means:
         self.vectorizer = None
         self.vectorized_documents = None
         self.true_k = n_clusters
+        self.corpus = html_documents
         self.model = self.select_model(html_documents)
 
     def select_model(self, html_documents):
@@ -38,19 +41,9 @@ class K_means:
                     break
         return cluster_titles
 
-    def get_text_by_distance_from_center(self):
-        from sklearn.metrics import pairwise_distances
-
-        distances = pairwise_distances(self.vectorized_documents, self.model.cluster_centers_,metric='cosine')
-
-        ranking = np.argsort(distances, axis=0)
-
-        df = pd.DataFrame({'text': text})
-        for i in range(self.model.n_clusters):
-            df['cluster_{}'.format(i)] = ranking[:, i]
-
-        top_n = 2
-
-        for i in range(self.model.n_clusters):
-            print('top_{} closest text to the cluster {} :'.format(top_n, i))
-            print(df.nsmallest(top_n, 'cluster_{}'.format(i))[['text']].values)
+    def get_centroids_doc_id_center_distance(self):
+        labels = self.model.labels_
+        distance_to_cluster = select_distance_to_cluster(self)
+        centroid_doc_id_center_distance = select_centroids_doc_id_center_distance(self.corpus,
+                                                                                  labels,
+                                                                                  distance_to_cluster)
