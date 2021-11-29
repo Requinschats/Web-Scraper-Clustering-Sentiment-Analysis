@@ -2,14 +2,16 @@ import requests
 from bs4 import BeautifulSoup
 
 from html_crawler.selectors import select_concordia_internal_links
+from robot_parser.robot_parser import RobotParser
 
 
 class HtmlCrawler:
     HTML_SEPARATOR = ";"
 
-    def __init__(self):
+    def __init__(self, base_url):
         self.links = select_concordia_internal_links()
         self.documents = []
+        self.robot_parser = RobotParser(base_url)
 
     def fetch_url_html(self, url):
         page = requests.get(url)
