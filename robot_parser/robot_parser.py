@@ -16,6 +16,4 @@ class RobotParser:
         parser = robotparser.RobotFileParser()
         parser.set_url(parse.urljoin(self.base_url, self.robot_file_name))
         parser.read()
-        print(parser.crawl_delay(self.AGENT_NAME))
-        print(parser.request_rate(self.AGENT_NAME))
         return parser

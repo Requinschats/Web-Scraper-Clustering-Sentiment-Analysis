@@ -1,10 +1,7 @@
-import numpy as np
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.cluster import KMeans
-import pandas as pd
 from k_means.selectors import select_ranked_terms_by_cluster, select_distance_to_cluster, \
     select_centroids_doc_id_center_distance
-from sklearn.metrics import pairwise_distances
 
 
 class K_means:

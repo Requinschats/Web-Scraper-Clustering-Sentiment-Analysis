@@ -1,6 +1,6 @@
 from cluster_Afinn.cluster_afinn import ClusterAfinn
 from html_crawler.html_crawler import HtmlCrawler
-from k_means_2.k_means import K_means
+from k_means.k_means import K_means
 from link_crawler.link_crawler import link_crawler
 
 URL_TO_FETCH_COUNT = 10
@@ -19,8 +19,6 @@ cluster_2_titles = k_means_2.get_clusters_title()
 cluster_6_titles = k_means_6.get_clusters_title()
 
 #  6: very positive, 3: positive, 0: neutral, -3: negative, -6: very negative
-
-afin = ClusterAfinn(k_means_2.get_centroids_doc_id_center_distance(), html_documents)
-
-print(cluster_6_titles)
-print(afin.get_clusters_sentiment_scores())
+afin_2_clusters = ClusterAfinn(k_means_2.get_centroids_doc_id_center_distance(), html_documents)
+print(cluster_2_titles)
+print(afin_2_clusters.get_clusters_sentiment_scores())

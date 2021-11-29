@@ -1,7 +1,8 @@
 from afinn import Afinn
 
-from cluster_Afinn.selectors import select_formatted_document
-from common.common import select_list_average
+from cluster_Afinn.selectors import select_formatted_document, select_doc_array_distance_sum, \
+    select_doc_distance_inverse_score, select_doc_distance_inverse_score_sum, select_doc_weight
+from common.common import select_list_average, select_weighted_list_average
 from html_crawler.html_crawler import HtmlCrawler
 
 
@@ -37,13 +38,13 @@ class ClusterAfinn:
         return self.afinn.score(sentence)
 
     def get_doc_array_sentiment_score(self, doc_array):
-        centroid_sentiments = []
+        centroid_sentiments, centroid_doc_weights = [], []
         for distance_sentences in doc_array:
-            sentences = distance_sentences[1]
-            sentiment_scores = list(map(self.get_sentence_sentiment_score, sentences))
+            centroid_doc_weights.append(select_doc_weight(distance_sentences[0], doc_array))
+            sentiment_scores = list(map(self.get_sentence_sentiment_score, distance_sentences[1]))
             doc_sentiment = select_list_average(sentiment_scores)
             centroid_sentiments.append(doc_sentiment)
-        return select_list_average(centroid_sentiments)
+        return select_weighted_list_average(centroid_sentiments, centroid_doc_weights)
 
     def get_clusters_sentiment_scores(self):
         clusters = self.get_sorted_corpus_by_cluster()
