@@ -5,7 +5,7 @@ from k_means.selectors import select_ranked_terms_by_cluster, select_distance_to
 
 
 class K_means:
-    EXCLUDED_CLUSTER_TITLES = ["concordia"]
+    EXCLUDED_CLUSTER_TITLES = ["concordia", "el"]
 
     def __init__(self, html_documents, n_clusters=2):
         self.vectorizer = None
@@ -42,3 +42,6 @@ class K_means:
         labels = self.model.labels_
         distance_to_cluster = select_distance_to_cluster(self)
         return select_centroids_doc_id_center_distance(self.corpus, labels, distance_to_cluster)
+
+    def get_sse(self):
+        return self.model.inertia_

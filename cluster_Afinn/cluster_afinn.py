@@ -1,7 +1,6 @@
 from afinn import Afinn
-
-from cluster_Afinn.selectors import select_formatted_document, select_doc_array_distance_sum, \
-    select_doc_distance_inverse_score, select_doc_distance_inverse_score_sum, select_doc_weight
+# https://github.com/fnielsen/afinn
+from cluster_Afinn.selectors import select_formatted_document, select_doc_weight
 from common.common import select_list_average, select_weighted_list_average
 from html_crawler.html_crawler import HtmlCrawler
 
