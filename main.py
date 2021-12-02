@@ -4,8 +4,8 @@ from k_means.k_means import K_means
 from link_crawler.link_crawler import link_crawler
 from outputs import output_clustering_information
 
-URL_TO_FETCH_COUNT = 100
-PAGES_TO_FETCH = 100
+URL_TO_FETCH_COUNT = 6
+PAGES_TO_FETCH = 6
 CLUSTER_COUNT_1 = 3
 CLUSTER_COUNT_2 = 6
 CONCORDIA_BASE_URL = "https://www.concordia.ca/robots.txt"
