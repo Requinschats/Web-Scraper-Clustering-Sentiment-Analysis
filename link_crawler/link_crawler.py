@@ -19,48 +19,66 @@ def is_valid_url(url):
     return bool(parsed.netloc) and bool(parsed.scheme)
 
 
-def get_all_website_links(url):
+def select_url_from_href(a_tag):
+    return a_tag.attrs.get("href")
+
+
+def select_is_valid_url(url, robots_parser):
+    if not is_valid_url(url): return False
+    if url in internal_urls: return False
+    if not robots_parser.can_fetch_url(url): return False
+    return True
+
+
+def select_formatted_url(current_page_url, url):
+    url = urljoin(current_page_url, url)
+    parsed_href = urlparse(url)
+    return parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
+
+
+def get_all_website_links(current_page_url, robots_parser):
     urls = set()
-    domain_name = urlparse(url).netloc
-    soup = BeautifulSoup(requests.get(url).content, "html.parser")
+    domain_name = urlparse(current_page_url).netloc
+    soup = BeautifulSoup(requests.get(current_page_url).content, "html.parser")
     for a_tag in soup.findAll("a"):
-        href = a_tag.attrs.get("href")
+        href = select_url_from_href(a_tag)
         if href == "" or href is None: continue
-        href = urljoin(url, href)
-        parsed_href = urlparse(href)
-        href = parsed_href.scheme + "://" + parsed_href.netloc + parsed_href.path
-        if not is_valid_url(href): continue
-        if href in internal_urls: continue
+
+        href = select_formatted_url(current_page_url, href)
+
+        if not select_is_valid_url(href, robots_parser): continue
+
         if domain_name not in href:
             if href not in external_urls:
                 print(f"{GRAY}[!] External link: {href}{RESET}")
                 external_urls.add(href)
             continue
         print(f"{GREEN}[*] Internal link: {href}{RESET}")
+
         urls.add(href)
         internal_urls.add(href)
     return urls
 
 
-def crawl(url, max_urls=5):
+def crawl(url, max_urls=5, robots_parser=None):
     global total_urls_visited
     total_urls_visited += 1
     print(f"{YELLOW}[*] Crawling: {url}{RESET}")
-    links = get_all_website_links(url)
+    links = get_all_website_links(url, robots_parser)
     for link in links:
         if total_urls_visited > max_urls: break
-        crawl(link, max_urls=max_urls)
+        crawl(link, max_urls, robots_parser)
 
 
 def are_links_already_fetched():
     return os.path.isfile("paths/www.concordia.ca_internal_links.txt")
 
 
-def link_crawler(url, max_url_count):
+def link_crawler(url, max_url_count, robots_parser):
     if are_links_already_fetched(): return
 
     max_urls = max_url_count
-    crawl(url, max_urls=max_urls)
+    crawl(url, max_urls, robots_parser)
 
     output_link_crawler_statistics(internal_urls, external_urls, max_urls)
     domain_name = urlparse(url).netloc
@@ -75,14 +93,3 @@ def link_crawler(url, max_url_count):
             print(external_link.strip(), file=f)
 
     return internal_urls
-
-
-if __name__ == "__main__":
-    import argparse
-
-    parser = argparse.ArgumentParser(description="Link Extractor Tool with Python")
-    parser.add_argument("-url", help="The URL to extract links from.")
-    parser.add_argument("-m", "--max-urls", help="Number of max URLs to crawl, default is 30.",
-                        default=30, type=int)
-    args = parser.parse_args()
-    link_crawler(args.url, args.max_urls)
