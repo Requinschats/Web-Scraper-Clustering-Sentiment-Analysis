@@ -23,8 +23,13 @@ def select_url_from_href(a_tag):
     return a_tag.attrs.get("href")
 
 
+def select_is_url_valid_format(url):
+    return ".html" in url
+
+
 def select_is_valid_url(url, robots_parser):
     if not is_valid_url(url): return False
+    if not select_is_url_valid_format(url): return False
     if url in internal_urls: return False
     if not robots_parser.can_fetch_url(url): return False
     return True
@@ -45,7 +50,6 @@ def get_all_website_links(current_page_url, robots_parser):
         if href == "" or href is None: continue
 
         href = select_formatted_url(current_page_url, href)
-
         if not select_is_valid_url(href, robots_parser): continue
 
         if domain_name not in href:

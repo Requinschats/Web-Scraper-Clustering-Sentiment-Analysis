@@ -3,7 +3,7 @@ from sklearn.metrics import pairwise_distances
 from common.common import sort_by_second_tuple_element
 
 
-def select_ranked_terms_by_cluster(order_centroids, terms, true_k, term_per_cluster):
+def select_tf_idf_ranked_terms_by_cluster(order_centroids, terms, true_k, term_per_cluster):
     ranked_terms_by_cluster = []
     for centroid_index in range(true_k):
         cluster_terms = []
