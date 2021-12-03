@@ -1,0 +1,13 @@
+
+-----------------------------------------------------------
+Number of documents fetched: 20
+Titles: ['campus', 'read', 'services']
+Number of clusters: 3
+SSE score for 3 clusters: 7.463165831299701
+Sentiment scores: {0: 0.1663628583369205, 1: 0.2491349480968858, 2: 0.17585392729753724}
+-----------------------------------------------------------
+Number of documents fetched: 20
+Titles: ['opened', 'campus', 'services', 'courses', 'payment', 'emploi']
+Number of clusters: 6
+SSE score for 6 clusters: 4.37205348923108
+Sentiment scores: {0: 0.23557692307692307, 1: 0.16531727499566243, 2: 0.18585047838877367, 3: 0.14355628058727568, 4: 0.10407239819004525, 5: -0.0018975332068311196}
