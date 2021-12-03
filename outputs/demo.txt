@@ -1,13 +1,13 @@
 
 -----------------------------------------------------------
 Number of documents fetched: 20
-Titles: ['campus', 'étudiants', 'program']
+Titles: ['campus', 'services', 'étudiants']
 Number of clusters: 3
-SSE score for 3 clusters: 7.603865654840863
-Sentiment scores: {0: 0.18559222915839912, 1: -0.011971079767689952, 2: 0.2175963718820862}
+SSE score for 3 clusters: 7.794392222631627
+Sentiment scores: {0: 0.17542608925937833, 1: 0.19661148696735617, 2: -0.011971079767689952}
 -----------------------------------------------------------
 Number of documents fetched: 20
-Titles: ['étudiants', 'campus', '30', 'graduate', 'services', '70']
+Titles: ['30', 'campus', 'department', '70', 'services', 'étudiants']
 Number of clusters: 6
-SSE score for 6 clusters: 5.0241377320971985
-Sentiment scores: {0: -0.011971079767689952, 1: 0.22162698412698406, 2: 0.18335312150033253, 3: 0.17780779398877028, 4: 0.2112853697582608, 5: 0.1016949152542373}
+SSE score for 6 clusters: 4.473240097030265
+Sentiment scores: {0: 0.18335312150033253, 1: 0.1812854006749104, 2: 0.1526530612244898, 3: 0.1016949152542373, 4: 0.21312056550428563, 5: -0.011971079767689952}
