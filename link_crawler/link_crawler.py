@@ -88,6 +88,8 @@ def link_crawler(url, max_url_count, robots_parser):
     domain_name = urlparse(url).netloc
 
     path = "paths/"
+    if not os.path.exists(path): os.makedirs(path)
+    
     with open(path + domain_name + "_internal_links.txt", "w+") as f:
         for internal_link in internal_urls:
             print(internal_link.strip(), file=f)
